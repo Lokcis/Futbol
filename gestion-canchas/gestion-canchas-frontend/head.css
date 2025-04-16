@@ -1,0 +1,64 @@
+:root{
+    --color1: #88E200;
+    --color2: #73C000;
+    --color3: #8FEB00;
+    --color4: #5F9E00;
+    --color5: #4A7C00;
+    --color6: #365A00;
+}
+
+body{
+    background-color: var(--color6);
+}
+
+#head{
+    background-color: whitesmoke;
+    top: 15px;
+    left: 17px;
+    width: 97%;
+    height: 200px;
+    position: absolute;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    border-color: gray;
+}
+
+#title {
+    font-family: 'Anton', sans-serif;
+    font-size: 70px;
+    color: var(--color5);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    margin: 0;
+    padding-top: 40px;
+    border-color: gray;
+}
+
+#nav-buttons, #login-buttons{
+    bottom: 0px;
+    display: flex;
+    gap:0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    position:absolute;
+}
+
+#nav-buttons{
+    left: 0px;
+}
+
+#login-buttons{
+    right: 0px;
+}
+
+
+
+.head-btn{
+    font-family: 'Anton', sans-serif;
+    letter-spacing: 1px;
+    background-color: white;
+    color: var(--color6);
+    padding: 10px 20px;
+    border-color: gray;
+    background-color: var(--color4);
+}

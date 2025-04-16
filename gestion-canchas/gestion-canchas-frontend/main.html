@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fútbol Piloto</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="head.css">
+        <link rel="stylesheet" href="mainPage.css">
+    </head>
+    <body onload="initMap()">
+        <header id="head">
+            <h1 id="title">Fútbol Piloto</h1>
+        
+            <div id="login-buttons" class="button-container">
+                <button id="login" class="head-btn" aria-label="Ingresar">Ingresar</button>
+                <button id="register" class="head-btn" aria-label="Registrarse">Registrarse</button>
+            </div>
+        
+            <nav id="nav-buttons" class="button-container">
+                <button class="head-btn">Principal</button>
+                <button class="head-btn">Canchas</button>
+                <button class="head-btn">Comunidad</button>
+                <button class="head-btn">Información</button>
+                <button class="head-btn">Sobre nosotros</button>
+            </nav>
+        </header>
+
+        <main id="main-page">
+            <p id="welcome-message">¡Bienvenido a Fútbol Piloto!
+                Encuentra tus canchas favoritas cerca de ti y haz tu reserva en tiempo real.
+                Explora, elige y juega sin complicaciones. ¡Tu próxima jugada empieza aquí!</p>
+            
+            <div id="map"></div>        
+            
+        </main>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDCSXtmUI-KR3qJ29oRdemNUpSIb-UDQ&libraries=places"></script>
+    </body>
+</html>

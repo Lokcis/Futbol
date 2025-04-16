@@ -1,0 +1,37 @@
+:root{
+    --color1: #88E200;
+    --color2: #73C000;
+    --color3: #8FEB00;
+    --color4: #5F9E00;
+    --color5: #4A7C00;
+    --color6: #365A00;
+}
+
+#main-page{
+    background-color: var(--color5);
+    width: 97%;
+    height: 750px;
+    position: absolute;
+    top: 227px;
+    left: 17px;
+}
+
+#welcome-message{
+    font-family: 'Anton', sans-serif;
+    font-size: 150%;
+    text-align: center;
+    margin: 15px 30px 0px 30px;
+    color: whitesmoke;
+    letter-spacing: 1px;
+    
+}
+
+#map {
+    height: 500px;
+    width: 100%;
+  }
+
+.popup-content img {
+    width: 200px;
+    height: auto;
+}
