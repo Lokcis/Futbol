@@ -1,0 +1,1 @@
+const main-btn = document.getElementById("main-btn")
