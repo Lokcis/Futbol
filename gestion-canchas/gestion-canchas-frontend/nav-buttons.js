@@ -1,1 +1,1 @@
-const main-btn = document.getElementById("main-btn")
+const main_btn = document.getElementById("main-btn");
