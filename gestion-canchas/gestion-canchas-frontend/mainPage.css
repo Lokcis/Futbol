@@ -9,11 +9,12 @@
 
 #main-page{
     background-color: var(--color5);
-    width: 97%;
+    width: 910px;
     height: 750px;
     position: absolute;
     top: 227px;
-    left: 17px;
+    left: 14px;
+    display: block;
 }
 
 #welcome-message{
@@ -35,3 +36,4 @@
     width: 200px;
     height: auto;
 }
+
