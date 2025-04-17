@@ -11,15 +11,20 @@ body{
     background-color: var(--color6);
 }
 
+.hidden{
+    display: none;
+}
+
 #head{
     background-color: whitesmoke;
     top: 15px;
-    left: 17px;
+    left: 50%;
     width: 97%;
     height: 200px;
     position: absolute;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
     border-color: gray;
+    transform: translateX(-50%);
 }
 
 #title {
