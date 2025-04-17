@@ -1,69 +1,103 @@
-:root{
-    --color1: #88E200;
-    --color2: #73C000;
-    --color3: #8FEB00;
-    --color4: #5F9E00;
-    --color5: #4A7C00;
-    --color6: #365A00;
+/* Definición de colores personalizados */
+:root {
+    --color1: #88E200; /* Verde claro */
+    --color2: #73C000; /* Verde medio */
+    --color3: #8FEB00; /* Verde brillante */
+    --color4: #5F9E00; /* Verde oscuro */
+    --color5: #4A7C00; /* Verde más oscuro */
+    --color6: #365A00; /* Verde muy oscuro */
 }
 
-body{
-    background-color: var(--color6);
+/* Estilo del fondo de la página */
+body {
+    background-color: var(--color6); /* El fondo de la página tiene el color más oscuro de la paleta */
 }
 
-.hidden{
-    display: none;
+/* Clase que oculta los elementos */
+.hidden {
+    display: none; /* La propiedad 'display: none' oculta el elemento */
 }
 
-#head{
-    background-color: whitesmoke;
-    top: 15px;
-    left: 50%;
-    width: 97%;
-    height: 200px;
-    position: absolute;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-    border-color: gray;
-    transform: translateX(-50%);
+/* Efecto para los botones con la clase '.head-btn' cuando son hover (cuando el cursor está encima) */
+.head-btn:hover {
+    background-color: var(--color2); /* Cambia el fondo a un verde más claro */
+    cursor: pointer; /* Muestra el cursor como una mano */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño del botón */
+    transition: all 0.2s ease-in-out; /* Hace la transición suave */
 }
 
+/* Estilo para el botón activo */
+.active-btn {
+    background-color: var(--color1); /* El fondo del botón se pone de un verde más brillante */
+    color: white; /* El texto del botón se vuelve blanco */
+}
+
+/* Estilo del contenedor del encabezado (header) */
+#head {
+    background-color: whitesmoke; /* El fondo del encabezado es blanco */
+    top: 15px; /* Coloca el encabezado un poco hacia abajo desde el top */
+    left: 50%; /* Centra el encabezado horizontalmente */
+    width: 97%; /* El encabezado ocupa el 97% del ancho de la página */
+    height: 200px; /* La altura del encabezado es de 200px */
+    position: absolute; /* Se coloca de forma absoluta en la página */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Sombra suave en el texto */
+    border-color: gray; /* El borde del encabezado es gris */
+    transform: translateX(-50%); /* Ajusta la posición horizontal para centrarlo */
+}
+
+/* Estilo del título del encabezado */
 #title {
-    font-family: 'Anton', sans-serif;
-    font-size: 70px;
-    color: var(--color5);
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    margin: 0;
-    padding-top: 40px;
-    border-color: gray;
+    font-family: 'Anton', sans-serif; /* Fuente del título */
+    font-size: 70px; /* Tamaño grande para el texto */
+    color: var(--color5); /* El texto tiene el color verde más oscuro */
+    text-transform: uppercase; /* El texto está en mayúsculas */
+    letter-spacing: 4px; /* Espaciado entre las letras */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Sombra en el texto */
+    text-align: center; /* El texto está centrado */
+    margin: 0; /* El margen es 0 */
+    padding-top: 40px; /* Agrega espacio arriba del título */
+    border-color: gray; /* Color del borde */
 }
 
-#nav-buttons, #login-buttons{
-    bottom: 0px;
-    display: flex;
-    gap:0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-    position:absolute;
+/* Estilos para los botones de navegación y login dentro del encabezado */
+#nav-buttons, #login-buttons {
+    bottom: 0px; /* Los coloca en la parte inferior del encabezado */
+    display: flex; /* Los botones están alineados en línea */
+    gap: 0; /* No hay espacio entre los botones */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Sombra en el texto */
+    position: absolute; /* Se posicionan de forma absoluta */
 }
 
-#nav-buttons{
-    left: 0px;
+/* Estilo específico para los botones de navegación */
+#nav-buttons {
+    left: 0px; /* Se alinean a la izquierda */
 }
 
-#login-buttons{
-    right: 0px;
+/* Estilo específico para los botones de login */
+#login-buttons {
+    right: 0px; /* Se alinean a la derecha */
 }
 
+/* Estilo general para las secciones (main) */
+main {
+    opacity: 0; /* Inicia con opacidad 0, es decir, invisible */
+    visibility: hidden; /* Está oculto por defecto */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transición suave para hacer visible la sección */
+}
 
+/* Clase que hace visible la sección */
+main.show {
+    opacity: 1; /* La opacidad se vuelve 1, es decir, visible */
+    visibility: visible; /* La sección se vuelve visible */
+}
 
-.head-btn{
-    font-family: 'Anton', sans-serif;
-    letter-spacing: 1px;
-    background-color: white;
-    color: var(--color6);
-    padding: 10px 20px;
-    border-color: gray;
-    background-color: var(--color4);
+/* Estilo para los botones dentro del encabezado */
+.head-btn {
+    font-family: 'Anton', sans-serif; /* Fuente del botón */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    background-color: white; /* Fondo blanco */
+    color: var(--color6); /* Texto con el color verde muy oscuro */
+    padding: 10px 20px; /* Espaciado interno del botón */
+    border-color: gray; /* Borde gris */
+    background-color: var(--color4); /* El fondo del botón tiene un verde oscuro */
 }
