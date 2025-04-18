@@ -4,6 +4,12 @@ const loginBtn = document.getElementById("login-btn");
 const loginMenu = document.getElementById("login-menu");
 const closeModalBtn = document.getElementById("close-modal-btn");
 
+// Nuevos elementos para el registro
+const registerMenu = document.getElementById("register-menu");
+const closeRegisterBtn = document.getElementById("close-register-btn");
+const redirectLoginBtn = document.getElementById("redirect-login-btn");
+const openRegisterLink = document.getElementById("open-register");
+
 // Navegación entre páginas
 buttons.forEach(btn => {
     const target = btn.getAttribute("data-target");
@@ -33,21 +39,46 @@ function showPage(pageId) {
 // Mostrar página principal al cargar
 showPage("main-page");
 
-// Función para abrir el modal
+// Función para abrir el modal de login
 loginBtn.addEventListener("click", () => {
-    loginMenu.classList.remove("hidden"); // Muestra el modal al quitar la clase 'hidden'
-    loginMenu.classList.add("show"); // Añade la clase 'show' para hacer visible el modal
+    loginMenu.classList.remove("hidden");
+    loginMenu.classList.add("show");
 });
 
-// Función para cerrar el modal cuando se haga clic en el botón de cerrar
+// Función para cerrar el modal de login
 closeModalBtn.addEventListener("click", () => {
-    loginMenu.classList.remove("show"); // Elimina la clase 'show'
-    loginMenu.classList.add("hidden"); // Añade la clase 'hidden' para ocultar el modal
+    loginMenu.classList.remove("show");
+    loginMenu.classList.add("hidden");
 });
 
-// Opcional: Cerrar el modal si el usuario hace clic fuera del contenido del modal
+// Cerrar login al hacer clic fuera del contenido
 loginMenu.addEventListener("click", (event) => {
     if (event.target === loginMenu) {
         loginMenu.classList.add("hidden");
     }
+});
+
+// Cerrar modal de registro
+closeRegisterBtn.addEventListener("click", () => {
+    registerMenu.classList.add("hidden");
+    registerMenu.classList.remove("show");
+});
+
+redirectLoginBtn.addEventListener("click", () => {
+    // Cerrar modal de registro
+    registerMenu.classList.add("hidden");
+    registerMenu.classList.remove("show");
+
+    // Mostrar el modal de login
+    loginMenu.classList.remove("hidden");
+    loginMenu.classList.add("show");
+});
+
+// Abrir modal de registro y cerrar login
+openRegisterLink.addEventListener("click", (e) => {
+    e.preventDefault(); 
+    loginMenu.classList.add("hidden");  // Oculta login
+    loginMenu.classList.remove("show");
+    registerMenu.classList.remove("hidden");  // Muestra registro
+    registerMenu.classList.add("show");
 });

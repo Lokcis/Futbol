@@ -104,15 +104,46 @@
                 <!-- Modal de login -->
         <div id="login-menu" class="modal-overlay hidden">
             <div class="modal-content">
-                <h2>Iniciar sesión</h2>
+                <h2 id="login-text">Iniciar sesión</h2>
                 <form>
                     <input type="text" placeholder="Correo electrónico" required>
                     <input type="password" placeholder="Contraseña" required>
-                    <button type="submit">Ingresar</button>
-                </form>
-                <button id="close-modal-btn">Cerrar</button>
-            </div>
+
+                    <!-- Opciones de registro y admin -->
+                    <p><a href="#" id="open-register" class="modal-link">¿No estás registrado? ¡Únete a nosotros!</a></p>
+                    <p><a href="#cancha" class="modal-link">¿Eres una cancha? ¡Ingresa aquí!</a></p>
+                    <p><a href="#admin" class="modal-link">Ingresar como administrador</a></p>
+                    
+                    <!-- Contenedor para los botones -->
+                    <div class="button-container">
+                        <button id="login-inner-btn" type="submit">Ingresar</button>
+                        <button id="close-modal-btn" type="button">Cerrar</button>
+                    </div>
+                </form>       
+            </div>            
         </div>       
+
+                <!-- Modal de registro -->
+        <div id="register-menu" class="modal-overlay hidden">
+            <div class="modal-content">
+                <h2 id="login-text">Registro</h2>
+                <form>
+                    <input type="text" placeholder="Nombre completo" required>
+                    <input type="email" placeholder="Correo electrónico" required>
+                    <input type="password" placeholder="Contraseña" required>
+
+                    <!-- Botones -->
+                    <div class="button-container">
+                        <button id="register-inner-btn" type="submit">Registrarse</button>
+                        <button id="close-register-btn" type="button">Cerrar</button>
+                        <button id="redirect-login-btn" type="button">¿Ya tienes cuenta? Inicia sesión</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
+        
 
         <!-- API de Google Maps para cargar el mapa en la página -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDCSXtmUI-KR3qJ29oRdemNUpSIb-UDQ&libraries=places"></script>
