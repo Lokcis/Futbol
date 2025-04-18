@@ -8,16 +8,6 @@
     --color6: #365A00; /* Verde muy oscuro */
 }
 
-/* Estilo del fondo de la página */
-body {
-    background-color: var(--color6); /* El fondo de la página tiene el color más oscuro de la paleta */
-}
-
-/* Clase que oculta los elementos */
-.hidden {
-    display: none; /* La propiedad 'display: none' oculta el elemento */
-}
-
 /* Efecto para los botones con la clase '.head-btn' cuando son hover (cuando el cursor está encima) */
 .head-btn:hover {
     background-color: var(--color2); /* Cambia el fondo a un verde más claro */
@@ -76,19 +66,6 @@ body {
 /* Estilo específico para los botones de login */
 #login-buttons {
     right: 0px; /* Se alinean a la derecha */
-}
-
-/* Estilo general para las secciones (main) */
-main {
-    opacity: 0; /* Inicia con opacidad 0, es decir, invisible */
-    visibility: hidden; /* Está oculto por defecto */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transición suave para hacer visible la sección */
-}
-
-/* Clase que hace visible la sección */
-main.show {
-    opacity: 1; /* La opacidad se vuelve 1, es decir, visible */
-    visibility: visible; /* La sección se vuelve visible */
 }
 
 /* Estilo para los botones dentro del encabezado */

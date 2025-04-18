@@ -5,13 +5,7 @@ const botones = document.querySelectorAll(".head-btn");
 botones.forEach(btn => {
     const target = btn.getAttribute("data-target");
 
-    if (target === "info-page") {
-        btn.addEventListener("click", () => alert("Sección de información próximamente"));
-    } else if (target === "about-page") {
-        btn.addEventListener("click", () => alert("Sección 'Sobre nosotros' próximamente"));
-    } else {
-        btn.addEventListener("click", () => showPage(target));
-    }
+    btn.addEventListener("click", () => showPage(target));
 });
 
 // Función para mostrar la sección y activar el botón correspondiente

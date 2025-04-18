@@ -10,10 +10,12 @@
 
 /* Estilo de la página de canchas */
 #courts-page{
-    background-color: var(--color5);  /* Fondo verde oscuro */
-    width: 910px;                     /* Ancho de la página */
-    top: 227px;                       /* Posición superior en la pantalla */
-    left: 14px;                       /* Posición desde la izquierda */
-    height: fit-content;              /* Ajusta la altura del contenedor según el contenido */
-    position: absolute;               /* Posicionamiento absoluto respecto al contenedor padre */
+    background-color: var(--color5); /* El fondo de la página es el color verde más oscuro */
+    width: 97%; /* La página ocupa el 97% del ancho de la ventana */
+    height: 75%; /* La altura de la página es el 75% de la ventana */
+    position: absolute; /* Se coloca de forma absoluta en la página */
+    top: 227px; /* La posición desde el top de la ventana es de 227px */
+    left: 50%; /* Se centra horizontalmente */
+    display: block; /* Se muestra como bloque */
+    transform: translateX(-50%); /* Se ajusta horizontalmente para centrarla perfectamente */
 }
