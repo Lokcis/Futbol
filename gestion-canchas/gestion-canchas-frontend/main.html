@@ -112,7 +112,7 @@
                     <!-- Opciones de registro y admin -->
                     <p><a href="#" id="open-register" class="modal-link">¿No estás registrado? ¡Únete a nosotros!</a></p>
                     <p><a href="#cancha" class="modal-link">¿Eres una cancha? ¡Ingresa aquí!</a></p>
-                    <p><a href="#admin" class="modal-link">Ingresar como administrador</a></p>
+                    <a href="#admin" id="admin-link" class="modal-link">Ingresar como administrador</a>
                     
                     <!-- Contenedor para los botones -->
                     <div class="button-container">
@@ -121,7 +121,44 @@
                     </div>
                 </form>       
             </div>            
-        </div>       
+        </div>  
+
+                <!-- Modal para ingresar como Cancha -->
+        <div id="cancha-menu" class="modal-overlay hidden">
+            <div class="modal-content">
+                <h2 id="cancha-text">Ingresar como Cancha</h2>
+                <form>
+                    <input type="text" placeholder="Nombre de la cancha" required>
+                    <input type="text" placeholder="Código de acceso" required>
+                    
+                    <!-- Contenedor para los botones -->
+                    <div class="button-container">
+                        <button id="cancha-inner-btn" type="submit">Ingresar</button>
+                        <button id="close-cancha-btn" type="button">Cerrar</button>
+                        <button id="redirect-login-cancha-btn" type="button">Volver al Login</button>
+                    </div>
+                </form>       
+            </div>            
+        </div>
+
+        <!-- Modal para ingresar como Administrador -->
+        <div id="admin-menu" class="modal-overlay hidden">
+            <div class="modal-content">
+                <h2 id="admin-text">Ingresar como Administrador</h2>
+                <form>
+                    <input type="text" placeholder="Usuario Administrador" required>
+                    <input type="password" placeholder="Contraseña Administrador" required>
+                    
+                    <!-- Contenedor para los botones -->
+                    <div class="button-container">
+                        <button id="admin-inner-btn" type="submit">Ingresar</button>
+                        <button id="close-admin-btn" type="button">Cerrar</button>
+                        <button id="redirect-login-admin-btn" type="button">Volver al Login</button>
+                    </div>
+                </form>       
+            </div>            
+        </div>
+            
 
                 <!-- Modal de registro -->
         <div id="register-menu" class="modal-overlay hidden">
@@ -142,9 +179,6 @@
             </div>
         </div>
 
-        
-        
-
         <!-- API de Google Maps para cargar el mapa en la página -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDCSXtmUI-KR3qJ29oRdemNUpSIb-UDQ&libraries=places"></script>
 
@@ -153,5 +187,7 @@
 
         <!-- Script que maneja la lógica de navegación entre las secciones -->
         <script src="nav-buttons.js"></script>
+
+        <script src="login.js"></script>
     </body>
 </html>
