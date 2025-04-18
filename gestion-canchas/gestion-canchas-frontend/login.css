@@ -30,12 +30,14 @@
 
 /* Estilo para el contenido dentro del modal */
 .modal-content {
-    background-color: var(--color6);
+    background-color: var(--color6); /* Fondo del modal */
     padding: 20px;
-    border: var(--color1);
+    border: 10px solid whitesmoke; /* Borde grueso verde */
     width: 300px;
     text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para un toque más atractivo */
 }
+
 
 /* Estilo para el botón de cerrar dentro del modal */
 #close-modal-btn, #login-inner-btn, #register-inner-btn,#close-register-btn,#redirect-login-btn {
