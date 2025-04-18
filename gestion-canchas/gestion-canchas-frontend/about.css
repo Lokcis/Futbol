@@ -1,0 +1,10 @@
+/* Definición de colores personalizados */
+:root {
+    --color1: #88E200; /* Verde claro */
+    --color2: #73C000; /* Verde medio */
+    --color3: #8FEB00; /* Verde brillante */
+    --color4: #5F9E00; /* Verde oscuro */
+    --color5: #4A7C00; /* Verde más oscuro */
+    --color6: #365A00; /* Verde muy oscuro */
+}
+

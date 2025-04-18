@@ -17,8 +17,32 @@
     border-radius: 5px; /* Bordes del mapa redondeados con un radio de 5px */
 }
 
+/* Estilos para la página principal (main-page) */
+#main-page {
+    background-color: var(--color5); /* El fondo de la página es el color verde más oscuro */
+    width: 97%; /* La página ocupa el 97% del ancho de la ventana */
+    height: 75%; /* La altura de la página es el 75% de la ventana */
+    position: absolute; /* Se coloca de forma absoluta en la página */
+    top: 227px; /* La posición desde el top de la ventana es de 227px */
+    left: 50%; /* Se centra horizontalmente */
+    display: block; /* Se muestra como bloque */
+    transform: translateX(-50%); /* Se ajusta horizontalmente para centrarla perfectamente */
+}
+
 /* Estilo para las imágenes dentro de los popups del mapa */
 .popup-content img {
     width: 200px; /* La imagen tiene un ancho de 200px */
     height: auto; /* La altura se ajusta automáticamente para mantener la proporción */
+}
+
+#copyright {
+    font-family: 'Anton', sans-serif; /* Fuente utilizada para el mensaje */
+    font-size: 90%; /* Tamaño de la fuente */
+    text-align: center; /* El texto se alinea al centro */
+    position: fixed; /* Se fija en la pantalla */
+    bottom: 0; /* Coloca el texto en la parte inferior */
+    left: 50%; /* Alineación horizontal completa */
+    width: 50%; /* Ocupa todo el ancho de la ventana */
+    color: whitesmoke;
+    transform: translateX(-50%);
 }
