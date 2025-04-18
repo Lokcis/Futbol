@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="info.css">
         <link rel="stylesheet" href="about.css">
         <link rel="stylesheet" href="format.css">
+        <link rel="stylesheet" href="login.css">
     </head>
     <body onload="initMap()">
         <!-- Cabecera del sitio web -->
@@ -25,7 +26,7 @@
         
             <!-- Contenedor de botones de login y registro -->
             <div id="login-buttons" class="button-container">
-                <button id="login" class="head-btn" aria-label="Ingresar">Ingresar</button>
+                <button id="login-btn" class="head-btn" aria-label="Ingresar">Ingresar</button>
                 <button id="register" class="head-btn" aria-label="Registrarse">¿Tienes una cancha? Súbela aquí</button>
             </div>
         
@@ -99,6 +100,19 @@
                 Nos apasiona la tecnología, el trabajo en equipo y, por supuesto, el fútbol. Este proyecto refleja nuestro compromiso con la innovación y nuestra motivación por seguir aprendiendo y creando soluciones útiles para las personas.
             </p>
         </main>
+
+                <!-- Modal de login -->
+        <div id="login-menu" class="modal-overlay hidden">
+            <div class="modal-content">
+                <h2>Iniciar sesión</h2>
+                <form>
+                    <input type="text" placeholder="Correo electrónico" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <button type="submit">Ingresar</button>
+                </form>
+                <button id="close-modal-btn">Cerrar</button>
+            </div>
+        </div>       
 
         <!-- API de Google Maps para cargar el mapa en la página -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDCSXtmUI-KR3qJ29oRdemNUpSIb-UDQ&libraries=places"></script>
