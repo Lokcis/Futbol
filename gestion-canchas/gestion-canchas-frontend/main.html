@@ -34,7 +34,7 @@
                 <!-- Botones de navegación con la clase 'head-btn' y un atributo data-target que corresponde al ID de cada página -->
                 <button class="head-btn" id="main-btn" data-target="main-page">Principal</button>
                 <button class="head-btn" id="courts-btn" data-target="courts-page">Canchas</button>
-                <button class="head-btn" id="community-btn" data-target="comunity-page">Comunidad</button>
+                <button class="head-btn" id="community-btn" data-target="community-page">Comunidad</button>
                 <button class="head-btn" id="info-btn" data-target="info-page">Información</button>
                 <button class="head-btn" id="about-btn" data-target="about-page">Sobre nosotros</button>
             </nav>
@@ -47,7 +47,11 @@
                 Explora, elige y juega sin complicaciones. ¡Tu próxima jugada empieza aquí!</p>
             
             <!-- Contenedor del mapa (será inicializado en el archivo map.js) -->
-            <div id="map"></div>            
+            <div id="map"></div>      
+            <p id="copyright">© 2025 Universidad Piloto de Colombia. 
+                Todos los derechos reservados. 
+                Somos estudiantes de la Universidad Piloto de Colombia, trabajando en este proyecto como parte de nuestra formación académica.
+            </p>      
         </main>
 
         <!-- Sección para ver las canchas disponibles -->
@@ -70,20 +74,29 @@
 
         <!-- Sección para unirse a la comunidad -->
         <main id="info-page" class="hidden">
-            <p id="msg-info">¡Únete a nuestra Comunidad!
-                En Fútbol Piloto, creemos que el fútbol es más que un deporte, es una forma de conectar con nuevas personas. Si buscas un equipo para jugar o simplemente quieres unirte a otros futboleros, este es el lugar indicado.
-                Encuentra compañeros de juego, organiza partidos y comparte la pasión por el fútbol. ¡Juntos somos más!</p>
+            <p id="msg-info">¡Bienvenido a Fútbol Piloto!</p>
             <p id="info-text">
-                <!-- Aqui se muestra el foro con las preguntas de la comunidad -->
+               Fútbol Piloto es una plataforma innovadora creada para facilitar la búsqueda y reserva de canchas sintéticas en tu ciudad. Nuestro objetivo es conectar a futboleros apasionados, haciendo que la experiencia de jugar sea más accesible y divertida. Ya sea que busques una cancha cercana para jugar con amigos o desees organizar un partido, nuestra plataforma está diseñada para hacer todo más sencillo, con información actualizada y opciones en tiempo real.
             </p>
+            <p id="contact-text">
+                Si tienes alguna pregunta, sugerencia o deseas obtener más información, no dudes en ponerte en contacto con nosotros. ¡Estamos aquí para ayudarte!
+            </p>
+            <p id="contact-info">
+                Correo electrónico: <a href="mailto:santiago-chavez@upc.edu.co">santiago-chavez@upc.edu.co</a><br>
+                Teléfono: <a href="tel:+573223691238">+57 322 369 1238</a>
+            </p>
+
         </main>
 
-        <main id="info-page" class="hidden">
-            <p id="msg-about">¡Únete a nuestra Comunidad!
-                En Fútbol Piloto, creemos que el fútbol es más que un deporte, es una forma de conectar con nuevas personas. Si buscas un equipo para jugar o simplemente quieres unirte a otros futboleros, este es el lugar indicado.
-                Encuentra compañeros de juego, organiza partidos y comparte la pasión por el fútbol. ¡Juntos somos más!</p>
+        <main id="about-page" class="hidden">
+            <p id="msg-about">¿Quiénes somos?</p>
             <p id="about-text">
                 <!-- Aqui se muestra el foro con las preguntas de la comunidad -->
+                Somos estudiantes de sexto semestre de la carrera de Ingeniería de Sistemas de la Universidad Piloto de Colombia, y actualmente cursamos la materia de Desarrollo Web.
+
+                Este proyecto, Fútbol Piloto, surge como parte de nuestro proceso de aprendizaje, con el propósito de aplicar nuestros conocimientos en el desarrollo de aplicaciones web funcionales, atractivas e interactivas. A través de esta plataforma buscamos facilitar la búsqueda y reserva de canchas sintéticas, así como promover la creación de una comunidad futbolera conectada digitalmente.
+                
+                Nos apasiona la tecnología, el trabajo en equipo y, por supuesto, el fútbol. Este proyecto refleja nuestro compromiso con la innovación y nuestra motivación por seguir aprendiendo y creando soluciones útiles para las personas.
             </p>
         </main>
 

@@ -1,0 +1,9 @@
+/* Definición de variables CSS (Custom Properties) para los colores */
+:root{
+    --color1: #88E200;  /* Color verde claro */
+    --color2: #73C000;  /* Color verde medio */
+    --color3: #8FEB00;  /* Color verde brillante */
+    --color4: #5F9E00;  /* Color verde oscuro */
+    --color5: #4A7C00;  /* Color verde muy oscuro */
+    --color6: #365A00;  /* Color verde casi negro */
+}
