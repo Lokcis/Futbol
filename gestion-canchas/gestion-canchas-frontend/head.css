@@ -27,9 +27,9 @@ body {
 }
 
 /* Estilo para el botón activo */
-.active-btn {
-    background-color: var(--color1); /* El fondo del botón se pone de un verde más brillante */
-    color: white; /* El texto del botón se vuelve blanco */
+.head-btn.active-btn {
+    background-color: var(--color1); /* Verde brillante para el botón activo */
+    color: var(--color6); /* Texto blanco */
 }
 
 /* Estilo del contenedor del encabezado (header) */
