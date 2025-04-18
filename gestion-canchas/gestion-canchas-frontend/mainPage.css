@@ -8,28 +8,6 @@
     --color6: #365A00; /* Verde muy oscuro */
 }
 
-/* Estilos para la página principal (main-page) */
-#main-page {
-    background-color: var(--color5); /* El fondo de la página es el color verde más oscuro */
-    width: 97%; /* La página ocupa el 97% del ancho de la ventana */
-    height: 75%; /* La altura de la página es el 75% de la ventana */
-    position: absolute; /* Se coloca de forma absoluta en la página */
-    top: 227px; /* La posición desde el top de la ventana es de 227px */
-    left: 50%; /* Se centra horizontalmente */
-    display: block; /* Se muestra como bloque */
-    transform: translateX(-50%); /* Se ajusta horizontalmente para centrarla perfectamente */
-}
-
-/* Estilo para el mensaje de bienvenida */
-#welcome-message {
-    font-family: 'Anton', sans-serif; /* Fuente utilizada para el mensaje */
-    font-size: 150%; /* Tamaño de la fuente 150% */
-    text-align: center; /* El texto se alinea al centro */
-    margin: 15px 30px 0px 30px; /* Márgenes alrededor del mensaje */
-    color: whitesmoke; /* Color del texto es blanco roto */
-    letter-spacing: 1px; /* Espaciado entre letras */
-}
-
 /* Estilo para el mapa */
 #map {
     height: 550px; /* El mapa tiene una altura de 550px */

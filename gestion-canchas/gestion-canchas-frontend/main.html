@@ -12,6 +12,11 @@
         <!-- Enlaces a hojas de estilo CSS -->
         <link rel="stylesheet" href="head.css"> <!-- Estilo para la cabecera -->
         <link rel="stylesheet" href="mainPage.css"> <!-- Estilo para la página principal -->
+        <link rel="stylesheet" href="courtsPage.css">
+        <link rel="stylesheet" href="communityPage.css">
+        <link rel="stylesheet" href="info.css">
+        <link rel="stylesheet" href="about.css">
+        <link rel="stylesheet" href="format.css">
     </head>
     <body onload="initMap()">
         <!-- Cabecera del sitio web -->
@@ -37,7 +42,7 @@
 
         <!-- Sección de la página principal (inicialmente visible) -->
         <main id="main-page" class="show">
-            <p id="welcome-message">¡Bienvenido a Fútbol Piloto!
+            <p id="msg-main">¡Bienvenido a Fútbol Piloto!
                 Encuentra tus canchas favoritas cerca de ti y haz tu reserva en tiempo real.
                 Explora, elige y juega sin complicaciones. ¡Tu próxima jugada empieza aquí!</p>
             
@@ -47,17 +52,39 @@
 
         <!-- Sección para ver las canchas disponibles -->
         <main id="courts-page" class="hidden">
-            <p id="courts-text">¡Explora las canchas disponibles para ti!</p>
+            <p id="msg-courts">¡Explora las canchas disponibles para ti!</p>
             <div id="courts">
                 <!-- Aquí se mostrarán las canchas disponibles -->
             </div>
         </main>
 
         <!-- Sección para unirse a la comunidad -->
-        <main id="comunity-page" class="hidden">
-            <p id="comunity-text">¡Únete a nuestra Comunidad!
+        <main id="community-page" class="hidden">
+            <p id="msg-community">¡Únete a nuestra Comunidad!
                 En Fútbol Piloto, creemos que el fútbol es más que un deporte, es una forma de conectar con nuevas personas. Si buscas un equipo para jugar o simplemente quieres unirte a otros futboleros, este es el lugar indicado.
                 Encuentra compañeros de juego, organiza partidos y comparte la pasión por el fútbol. ¡Juntos somos más!</p>
+            <div id="forum">
+                <!-- Aqui se muestra el foro con las preguntas de la comunidad -->
+            </div>
+        </main>
+
+        <!-- Sección para unirse a la comunidad -->
+        <main id="info-page" class="hidden">
+            <p id="msg-info">¡Únete a nuestra Comunidad!
+                En Fútbol Piloto, creemos que el fútbol es más que un deporte, es una forma de conectar con nuevas personas. Si buscas un equipo para jugar o simplemente quieres unirte a otros futboleros, este es el lugar indicado.
+                Encuentra compañeros de juego, organiza partidos y comparte la pasión por el fútbol. ¡Juntos somos más!</p>
+            <p id="info-text">
+                <!-- Aqui se muestra el foro con las preguntas de la comunidad -->
+            </p>
+        </main>
+
+        <main id="info-page" class="hidden">
+            <p id="msg-about">¡Únete a nuestra Comunidad!
+                En Fútbol Piloto, creemos que el fútbol es más que un deporte, es una forma de conectar con nuevas personas. Si buscas un equipo para jugar o simplemente quieres unirte a otros futboleros, este es el lugar indicado.
+                Encuentra compañeros de juego, organiza partidos y comparte la pasión por el fútbol. ¡Juntos somos más!</p>
+            <p id="about-text">
+                <!-- Aqui se muestra el foro con las preguntas de la comunidad -->
+            </p>
         </main>
 
         <!-- API de Google Maps para cargar el mapa en la página -->
