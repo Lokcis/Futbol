@@ -8,7 +8,7 @@
     --color6: #365A00; /* Verde muy oscuro */
 }
 
-#login-text{    
+#login-text,#cancha-text,#admin-menu{    
     font-family: 'Anton', sans-serif; /* Fuente utilizada para el mensaje */
     color: #8FEB00;
     border: #73C000;
@@ -40,7 +40,7 @@
 
 
 /* Estilo para el botón de cerrar dentro del modal */
-#close-modal-btn, #login-inner-btn, #register-inner-btn,#close-register-btn,#redirect-login-btn {
+#cancha-inner-btn,#close-cancha-btn,#redirect-login-cancha-btn,#admin-inner-btn,#close-admin-btn,#redirect-login-admin-btn,#close-modal-btn, #login-inner-btn, #register-inner-btn,#close-register-btn,#redirect-login-btn {
     margin-top: 10px;
     background-color: var(--color1); /* Usando el color personalizado */
     border: none;

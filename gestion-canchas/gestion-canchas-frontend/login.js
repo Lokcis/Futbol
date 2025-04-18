@@ -1,6 +1,5 @@
 // Selección de elementos
 const loginBtn = document.getElementById("login-btn");
-const registerBtn = document.getElementById("register");
 const loginMenu = document.getElementById("login-menu");
 const closeModalBtn = document.getElementById("close-modal-btn");
 
@@ -39,14 +38,6 @@ loginBtn.addEventListener("click", (e) => {
     hideAllModals();
     loginMenu.classList.remove("hidden");
     loginMenu.classList.add("show");
-});
-
-// 2. Botón "¿Tienes una cancha?" en header
-registerBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    hideAllModals();
-    canchaMenu.classList.remove("hidden");
-    canchaMenu.classList.add("show");
 });
 
 // 3. Cerrar modal de login
