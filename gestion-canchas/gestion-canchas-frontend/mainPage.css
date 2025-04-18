@@ -1,39 +1,46 @@
-:root{
-    --color1: #88E200;
-    --color2: #73C000;
-    --color3: #8FEB00;
-    --color4: #5F9E00;
-    --color5: #4A7C00;
-    --color6: #365A00;
+/* Definición de colores personalizados */
+:root {
+    --color1: #88E200; /* Verde claro */
+    --color2: #73C000; /* Verde medio */
+    --color3: #8FEB00; /* Verde brillante */
+    --color4: #5F9E00; /* Verde oscuro */
+    --color5: #4A7C00; /* Verde más oscuro */
+    --color6: #365A00; /* Verde muy oscuro */
 }
 
-#main-page{
-    background-color: var(--color5);
-    width: 910px;
-    height: 750px;
-    position: absolute;
-    top: 227px;
-    left: 14px;
-    display: block;
+/* Estilos para la página principal (main-page) */
+#main-page {
+    background-color: var(--color5); /* El fondo de la página es el color verde más oscuro */
+    width: 97%; /* La página ocupa el 97% del ancho de la ventana */
+    height: 75%; /* La altura de la página es el 75% de la ventana */
+    position: absolute; /* Se coloca de forma absoluta en la página */
+    top: 227px; /* La posición desde el top de la ventana es de 227px */
+    left: 50%; /* Se centra horizontalmente */
+    display: block; /* Se muestra como bloque */
+    transform: translateX(-50%); /* Se ajusta horizontalmente para centrarla perfectamente */
 }
 
-#welcome-message{
-    font-family: 'Anton', sans-serif;
-    font-size: 150%;
-    text-align: center;
-    margin: 15px 30px 0px 30px;
-    color: whitesmoke;
-    letter-spacing: 1px;
-    
+/* Estilo para el mensaje de bienvenida */
+#welcome-message {
+    font-family: 'Anton', sans-serif; /* Fuente utilizada para el mensaje */
+    font-size: 150%; /* Tamaño de la fuente 150% */
+    text-align: center; /* El texto se alinea al centro */
+    margin: 15px 30px 0px 30px; /* Márgenes alrededor del mensaje */
+    color: whitesmoke; /* Color del texto es blanco roto */
+    letter-spacing: 1px; /* Espaciado entre letras */
 }
 
+/* Estilo para el mapa */
 #map {
-    height: 500px;
-    width: 100%;
-  }
-
-.popup-content img {
-    width: 200px;
-    height: auto;
+    height: 550px; /* El mapa tiene una altura de 550px */
+    width: 95%; /* El mapa ocupa el 95% del ancho de la página */
+    top: 14px; /* Se coloca 14px desde el top */
+    left: 22px; /* Se coloca 22px desde el lado izquierdo */
+    border-radius: 5px; /* Bordes del mapa redondeados con un radio de 5px */
 }
 
+/* Estilo para las imágenes dentro de los popups del mapa */
+.popup-content img {
+    width: 200px; /* La imagen tiene un ancho de 200px */
+    height: auto; /* La altura se ajusta automáticamente para mantener la proporción */
+}
