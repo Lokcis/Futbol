@@ -1,0 +1,92 @@
+/* Definición de colores personalizados */
+:root {
+    --color1: #88E200; /* Verde claro */
+    --color2: #73C000; /* Verde medio */
+    --color3: #8FEB00; /* Verde brillante */
+    --color4: #5F9E00; /* Verde oscuro */
+    --color5: #4A7C00; /* Verde más oscuro */
+    --color6: #365A00; /* Verde muy oscuro */
+}
+
+#login-text{    
+    font-family: 'Anton', sans-serif; /* Fuente utilizada para el mensaje */
+    color: #8FEB00;
+    border: #73C000;
+    letter-spacing: 1px;
+}
+
+/* Estilo para el fondo oscuro del modal */
+.modal-overlay {
+    display: none; /* El modal está oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo para el contenido dentro del modal */
+.modal-content {
+    background-color: var(--color6);
+    padding: 20px;
+    border: var(--color1);
+    width: 300px;
+    text-align: center;
+}
+
+/* Estilo para el botón de cerrar dentro del modal */
+#close-modal-btn, #login-inner-btn, #register-inner-btn,#close-register-btn,#redirect-login-btn {
+    margin-top: 10px;
+    background-color: var(--color1); /* Usando el color personalizado */
+    border: none;
+    padding: 10px;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#login-inner-btn:hover {
+    background-color: var(--color2); /* Color al pasar el mouse */
+}
+
+#close-modal-btn:hover {
+    background-color: var(--color2); /* Cambio de color en hover */
+}
+
+/* Animación para la aparición del modal */
+.modal-overlay.show {
+    display: flex; /* Muestra el modal */
+    animation: fadeIn 0.5s ease-in-out; /* Efecto de aparición */
+}
+
+/* Estilo para los enlaces dentro del modal */
+.modal-link {
+    font-size: 0.75rem; /* Más pequeño que el texto normal */    
+    font-family: 'Anton', sans-serif; /* Fuente utilizada para el mensaje */
+    color: var(--color3); /* Verde oscuro personalizado */
+    letter-spacing: 1px;
+    text-decoration: none;
+    display: block;
+    margin: 2px 0;
+    transition: color 0.3s;
+    line-height: 1.2;
+}
+
+.modal-link:hover {
+    color: var(--color1); /* Cambia a un verde claro al pasar el mouse */
+    text-decoration: underline;
+}
+
+
+/* Animación de desvanecimiento */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
