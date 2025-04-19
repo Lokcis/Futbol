@@ -3,13 +3,29 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require('cors');
-
+const multer = require("multer");
+const path = require("path")
 const pool = require("./db"); // ← importas la conexión
 
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json()); // Middleware para manejar peticiones con cuerpo JSON
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.urlencoded({ extended: true }));
+// Configurar multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Asegúrate de tener esta carpeta creada
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
 
 // Middleware para verificar el JWT
 const verificarToken = (req, res, next) => {
@@ -18,18 +34,17 @@ const verificarToken = (req, res, next) => {
   if (!token) {
     return res.status(403).json({ error: "Token no proporcionado" });
   }
-  if (req.user.rol !== "admin") {
-    return res
-      .status(403)
-      .json({ error: "Acceso denegado. No tienes permisos." });
-  }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  console.log("Token recibido:", token);
+
+  jwt.verify(token.split(" ")[1], "miclaveultrasecreta", (err, decoded) => {
     if (err) {
+      console.error("Error al verificar el token:", err);
       return res.status(403).json({ error: "Token inválido" });
     }
 
-    req.user = decoded;
+    console.log("Token decodificado:", decoded); // Para depuración
+    req.user = decoded; // Decodifica el token y lo almacena en `req.user`
     next();
   });
 };
@@ -37,10 +52,9 @@ const verificarToken = (req, res, next) => {
 // Middleware para verificar rol (solo si es dueño)
 const verificarRol = (roles) => {
   return (req, res, next) => {
+    console.log("Rol del usuario:", req.user.rol); // Para depuración
     if (!roles.includes(req.user.rol)) {
-      return res
-        .status(403)
-        .json({ error: "No tienes permiso para acceder a esta ruta" });
+      return res.status(403).json({ error: "No tienes permiso para acceder a esta ruta" });
     }
     next();
   };
@@ -112,7 +126,12 @@ app.post("/usuarios", async (req, res) => {
       [nombre, email, hashedPassword, rol]
     );
 
-    res.status(201).json(result.rows[0]);
+    res.status(201).json({
+      mensaje: "Usuario registrado correctamente",
+      usuario: result.rows[0],
+    });
+    
+
   } catch (error) {
     console.error("Error al registrar el usuario:", error);
     res.status(500).json({ error: "Error al registrar el usuario" });
@@ -178,36 +197,54 @@ app.post("/reservas", verificarToken, async (req, res) => {
   }
 });
 
-// Ruta para agregar una nueva cancha
-app.post("/canchas", verificarToken, async (req, res) => {
-  const { nombre, ubicacion, imagen_url, dueño_id } = req.body;
+// Ruta para agregar una nueva cancha con imágenes
+app.post(
+  "/canchas",
+  verificarToken, // Verifica que el usuario esté autenticado
+  verificarRol(["dueño", "admin"]), // Permite solo a dueños o admins
+  upload.array("imagenes", 5),
+  async (req, res) => {
+    console.log("📥 Se recibió un POST en /canchas");
+    console.log("🧾 req.body:", req.body);
+    console.log("🖼️ req.files:", req.files);
 
-  if (!nombre || !ubicacion || !dueño_id) {
-    return res.status(400).json({ error: "Faltan datos requeridos" });
-  }
+    const { nombre, direccion, lat, lng, dueno_id } = req.body;
 
-  try {
-    const result = await pool.query(
-      "INSERT INTO canchas (nombre, ubicacion, imagen_url, dueño_id) VALUES ($1, $2, $3, $4) RETURNING *",
-      [nombre, ubicacion, imagen_url, dueño_id]
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error("Error al agregar la cancha:", error); // ← mira bien lo que sale aquí
-    res.status(500).json({ error: "Error al agregar la cancha" });
-  }
-});
+    if (!nombre?.trim() || !direccion?.trim() || !lat?.trim() || !lng?.trim() || !dueno_id?.trim()) {
+      return res.status(400).json({ error: "Faltan datos requeridos" });
+    }
 
-// Ruta para obtener todas las canchas
-app.get("/disponibilidades", verificarToken, async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM disponibilidades");
-    res.json(result.rows); // ← manda las canchas como respuesta
-  } catch (error) {
-    console.error("Error al obtener disponibilidad:", error);
-    res.status(500).json({ error: "Error al obtener la disponibilidad" });
+    try {
+      // 1. Insertar la cancha
+      const result = await pool.query(
+        `INSERT INTO canchas (nombre, direccion, lat, lng, dueno_id) 
+         VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+        [nombre, direccion, lat, lng, dueno_id]
+      );
+
+      const cancha = result.rows[0];
+
+      // 2. Insertar las imágenes en la tabla cancha_imagenes
+      const archivos = req.files;
+      if (archivos && archivos.length > 0) {
+        for (let i = 0; i < archivos.length; i++) {
+          const archivo = archivos[i];
+          const url = `/uploads/${archivo.filename}`; // Ruta accesible desde el frontend
+
+          await pool.query(
+            `INSERT INTO cancha_imagenes (cancha_id, url, orden) VALUES ($1, $2, $3)`,
+            [cancha.id, url, i]
+          );
+        }
+      }
+
+      res.status(201).json({ mensaje: "Cancha registrada con éxito", cancha });
+    } catch (error) {
+      console.error("Error al registrar la cancha:", error);
+      res.status(500).json({ error: "Error al registrar la cancha" });
+    }
   }
-});
+);
 // Ruta para agregar disponibilidad
 app.post("/disponibilidades", async (req, res) => {
   const { cancha_id, fecha, hora_inicio, hora_fin } = req.body;

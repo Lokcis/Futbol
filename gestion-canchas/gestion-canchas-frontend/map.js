@@ -58,7 +58,6 @@ function mostrarResultados(results, status, pagination) {
     console.error("Error al buscar canchas sintéticas: ", status);
   }
 }
-
 // Función para crear un marcador en el mapa para cada lugar encontrado
 function createMarker(place) {
   // Verificar si el lugar tiene una ubicación válida
@@ -69,7 +68,7 @@ function createMarker(place) {
     map,                          // Asignar el mapa en el que se mostrará
     position: place.geometry.location,  // Establecer la posición del marcador
     icon: {
-      url: 'ruta/a/tu/icono.png',  // URL de un icono personalizado para el marcador
+      //   url: 'ruta/a/tu/icono.png',  // URL de un icono personalizado para el marcador
       scaledSize: new google.maps.Size(40, 40),  // Tamaño escalado del icono
     }
   });
@@ -90,8 +89,18 @@ function createMarker(place) {
 
     content += `</div>`;  // Cerrar el contenido del popup
 
+    // Agregar un botón de redirección dentro del pop-up
+    content += `
+      <br>
+      <button onclick="window.location.href='horarios.html?placeId=${place.place_id}'">
+        Ver horarios disponibles
+      </button>
+    `;
+
     // Establecer el contenido del infowindow y abrirlo en el mapa
     infowindow.setContent(content);
     infowindow.open(map, marker);
   });
 }
+
+
