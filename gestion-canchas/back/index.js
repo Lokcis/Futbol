@@ -152,8 +152,21 @@ app.get("/test-db", async (req, res) => {
 // Ruta para obtener todas las canchas
 app.get("/canchas", verificarToken, async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM canchas");
-    res.json(result.rows); // ← manda las canchas como respuesta
+    const result = await pool.query(`
+      SELECT c.id AS cancha_id, 
+             c.nombre, 
+             c.direccion, 
+             c.lat, 
+             c.lng, 
+             c.dueno_id, 
+             c.telefono_contacto, -- Incluye el campo telefono_contacto
+             json_agg(CONCAT('http://localhost:5000', ci.url)) AS imagenes
+      FROM canchas c
+      LEFT JOIN cancha_imagenes ci ON c.id = ci.cancha_id
+      GROUP BY c.id
+    `);
+
+    res.json(result.rows); // Devuelve las canchas con sus imágenes y teléfono
   } catch (error) {
     console.error("Error al obtener canchas:", error);
     res.status(500).json({ error: "Error al obtener canchas" });
@@ -162,38 +175,31 @@ app.get("/canchas", verificarToken, async (req, res) => {
 
 // Ruta para realizar una reserva
 app.post("/reservas", verificarToken, async (req, res) => {
-  const { usuario_id, disponibilidad_id } = req.body;
+  const { disponibilidad_id } = req.body;
+  const usuario_id = req.user.userId; // Obtener el ID del usuario desde el token
 
   try {
-    // Verificar que la disponibilidad está disponible
-    const disponibilidadResult = await pool.query(
-      "SELECT disponible FROM disponibilidades WHERE id = $1",
-      [disponibilidad_id]
+    await pool.query("BEGIN");
+
+    // Crear la reserva
+    const result = await pool.query(
+      `INSERT INTO reservas (usuario_id, disponibilidad_id, fecha_reserva)
+       VALUES ($1, $2, NOW()) RETURNING id`,
+      [usuario_id, disponibilidad_id]
     );
-    const disponibilidad = disponibilidadResult.rows[0];
 
-    if (!disponibilidad || !disponibilidad.disponible) {
-      return res
-        .status(400)
-        .json({ message: "La disponibilidad no está disponible." });
-    }
-
-    // Marcar la disponibilidad como reservada (disponible = false)
+    // Marcar la disponibilidad como no disponible
     await pool.query(
       "UPDATE disponibilidades SET disponible = false WHERE id = $1",
       [disponibilidad_id]
     );
 
-    // Crear la reserva
-    const reservaResult = await pool.query(
-      "INSERT INTO reservas (usuario_id, disponibilidad_id) VALUES ($1, $2) RETURNING *",
-      [usuario_id, disponibilidad_id]
-    );
-
-    res.status(201).json(reservaResult.rows[0]);
+    await pool.query("COMMIT");
+    res.status(201).json({ message: "Reserva creada exitosamente", reserva_id: result.rows[0].id });
   } catch (error) {
-    console.error("Error al realizar la reserva:", error);
-    res.status(500).json({ error: "Error al realizar la reserva" });
+    await pool.query("ROLLBACK");
+    console.error("Error al crear la reserva:", error);
+    res.status(500).json({ error: "Error al crear la reserva" });
   }
 });
 
@@ -208,18 +214,18 @@ app.post(
     console.log("🧾 req.body:", req.body);
     console.log("🖼️ req.files:", req.files);
 
-    const { nombre, direccion, lat, lng, dueno_id } = req.body;
+    const { nombre, direccion, lat, lng, dueno_id, telefono_contacto, cantidad_canchas } = req.body;
 
-    if (!nombre?.trim() || !direccion?.trim() || !lat?.trim() || !lng?.trim() || !dueno_id?.trim()) {
+    if (!nombre?.trim() || !direccion?.trim() || !lat?.trim() || !lng?.trim() || !dueno_id?.trim() || !telefono_contacto?.trim() || !cantidad_canchas) {
       return res.status(400).json({ error: "Faltan datos requeridos" });
     }
 
     try {
       // 1. Insertar la cancha
       const result = await pool.query(
-        `INSERT INTO canchas (nombre, direccion, lat, lng, dueno_id) 
-         VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-        [nombre, direccion, lat, lng, dueno_id]
+        `INSERT INTO canchas (nombre, direccion, lat, lng, dueno_id, telefono_contacto, cantidad_canchas) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+        [nombre, direccion, lat, lng, dueno_id, telefono_contacto, cantidad_canchas]
       );
 
       const cancha = result.rows[0];
@@ -245,6 +251,46 @@ app.post(
     }
   }
 );
+
+app.post("/canchas", verificarToken, verificarRol(["dueño", "admin"]), async (req, res) => {
+  const { nombre, direccion, lat, lng, dueno_id, telefono_contacto, cantidad_canchas, horarios } = req.body;
+
+  if (!nombre || !direccion || !lat || !lng || !dueno_id || !telefono_contacto || !cantidad_canchas) {
+    return res.status(400).json({ error: "Faltan datos requeridos" });
+  }
+
+  try {
+    await pool.query("BEGIN");
+
+    // Insertar la cancha
+    const result = await pool.query(
+      `INSERT INTO canchas (nombre, direccion, lat, lng, dueno_id, telefono_contacto, cantidad_canchas) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+      [nombre, direccion, lat, lng, dueno_id, telefono_contacto, cantidad_canchas]
+    );
+
+    const canchaId = result.rows[0].id;
+
+    // Insertar los horarios
+    if (horarios && horarios.length > 0) {
+      for (const horario of horarios) {
+        await pool.query(
+          `INSERT INTO disponibilidades (cancha_id, fecha, hora_inicio, hora_fin) 
+           VALUES ($1, $2, $3, $4)`,
+          [canchaId, horario.fecha, horario.hora_inicio, horario.hora_fin]
+        );
+      }
+    }
+
+    await pool.query("COMMIT");
+    res.status(201).json({ mensaje: "Cancha y horarios registrados con éxito" });
+  } catch (error) {
+    await pool.query("ROLLBACK");
+    console.error("Error al registrar la cancha y horarios:", error);
+    res.status(500).json({ error: "Error al registrar la cancha y horarios" });
+  }
+});
+
 // Ruta para agregar disponibilidad
 app.post("/disponibilidades", async (req, res) => {
   const { cancha_id, fecha, hora_inicio, hora_fin } = req.body;
@@ -305,6 +351,7 @@ app.post("/reservas", verificarToken, async (req, res) => {
     client.release();
   }
 });
+
 app.get("/reservas/:usuario_id", verificarToken, async (req, res) => {
   const { usuario_id } = req.params;
 
@@ -371,6 +418,47 @@ app.delete("/reservas/:reserva_id", verificarToken, async (req, res) => {
     res.status(500).json({ error: "Error al cancelar la reserva" });
   } finally {
     client.release();
+  }
+});
+
+app.get("/reservas/cancha/:cancha_id", verificarToken, async (req, res) => {
+  const { cancha_id } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT r.id, d.fecha, d.hora_inicio, d.hora_fin
+       FROM reservas r
+       JOIN disponibilidades d ON r.disponibilidad_id = d.id
+       WHERE d.cancha_id = $1`,
+      [cancha_id]
+    );
+
+    res.json(result.rows); // Devuelve las reservas de la cancha
+  } catch (error) {
+    console.error("Error al obtener las reservas de la cancha:", error);
+    res.status(500).json({ error: "Error al obtener las reservas de la cancha" });
+  }
+});
+
+app.get("/disponibilidades/cancha/:cancha_id", async (req, res) => {
+  const { cancha_id } = req.params;
+
+  if (isNaN(cancha_id)) {
+    return res.status(400).json({ error: "El ID de la cancha debe ser un número válido." });
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT id, fecha, hora_inicio, hora_fin, disponible
+       FROM disponibilidades
+       WHERE cancha_id = $1 AND disponible = true`,
+      [parseInt(cancha_id)]
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error al obtener las disponibilidades de la cancha:", error);
+    res.status(500).json({ error: "Error al obtener las disponibilidades de la cancha" });
   }
 });
 

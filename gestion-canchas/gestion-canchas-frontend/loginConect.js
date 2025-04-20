@@ -27,7 +27,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         document.getElementById('login-menu').classList.add('hidden');
            
             // Redirigir al mapa
-            window.location.href = "mapa.html"; // Redirige a mapa.html después de registro exitoso
+            window.location.href = "horarios.html"; // Redirige a mapa.html después de registro exitoso
     
       } else {
         alert(data.error || 'Error al iniciar sesión');

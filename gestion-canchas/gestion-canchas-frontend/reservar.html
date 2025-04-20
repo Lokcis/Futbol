@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Disponibilidad de Canchas</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #4CAF50; color: white; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    #error { color: red; margin-top: 20px; }
+    .btn-reservar {
+      padding: 5px 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-reservar:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Disponibilidad de Cancha</h1>
+
+  <div id="error"></div>
+  <table id="tablaDisponibilidad" style="display: none;">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Disponible</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    // Obtener el ID de la cancha desde la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const canchaId = urlParams.get("cancha_id");
+    console.log("Cancha ID obtenido:", canchaId);
+
+    if (!canchaId) {
+      document.getElementById("error").textContent = "No se proporcionó un ID de cancha válido.";
+    } else {
+      consultarDisponibilidad(canchaId);
+    }
+
+    async function consultarDisponibilidad(canchaId) {
+      const tabla = document.getElementById("tablaDisponibilidad");
+      const tbody = tabla.querySelector("tbody");
+      const errorDiv = document.getElementById("error");
+
+      // Limpiar datos previos
+      tbody.innerHTML = "";
+      errorDiv.textContent = "";
+      tabla.style.display = "none";
+
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          errorDiv.textContent = "No se encontró un token. Inicia sesión para continuar.";
+          return;
+        }
+
+        const response = await fetch(`http://localhost:5000/disponibilidades/cancha/${canchaId}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los datos");
+        }
+
+        const datos = await response.json();
+
+        if (datos.length === 0) {
+          errorDiv.textContent = "No hay horarios disponibles para esta cancha.";
+          return;
+        }
+
+        datos.forEach(d => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${formatFecha(d.fecha)}</td>
+            <td>${d.hora_inicio.slice(0, 5)}</td>
+            <td>${d.hora_fin.slice(0, 5)}</td>
+            <td>${d.disponible ? "Sí" : "No"}</td>
+            <td><button class="btn-reservar">Reservar</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+
+        tabla.style.display = "table";
+      } catch (error) {
+        console.error("Error al consultar la disponibilidad:", error);
+        errorDiv.textContent = "Ocurrió un error al consultar la disponibilidad.";
+      }
+    }
+
+    function formatFecha(fechaISO) {
+      const fecha = new Date(fechaISO);
+      return fecha.toLocaleDateString(); // Formato: dd/mm/yyyy
+    }
+  </script>
+</body>
+</html>

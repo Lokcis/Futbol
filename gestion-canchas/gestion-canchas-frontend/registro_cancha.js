@@ -30,6 +30,8 @@ document.getElementById('register-cancha-form').addEventListener('submit', async
   // Obtener los valores del formulario
   const nombre = document.getElementById('nombre').value;
   const direccion = document.getElementById('ubicacion').value;
+  const telefono = document.getElementById('telefono').value; // Nuevo campo: Teléfono de contacto
+  const cantidadCanchas = document.getElementById('cantidad-canchas').value; // Nuevo campo: Cantidad de canchas
   const imagenes = document.getElementById('imagenes').files;
 
   // Asegúrate de que latitud y longitud estén definidos
@@ -45,7 +47,9 @@ document.getElementById('register-cancha-form').addEventListener('submit', async
   formData.append('direccion', direccion);
   formData.append('lat', lat);
   formData.append('lng', lng);
-  const dueno_id = 22; // Cambia esto por el ID del dueño autenticado
+  formData.append('telefono_contacto', telefono); // Agregar el teléfono al FormData
+  formData.append('cantidad_canchas', cantidadCanchas); // Agregar la cantidad de canchas al FormData
+  const dueno_id = 28; // Asignar un ID fijo para pruebas
   formData.append('dueno_id', dueno_id);
 
   // Añadir las imágenes al FormData (puede haber más de una)
@@ -59,9 +63,19 @@ document.getElementById('register-cancha-form').addEventListener('submit', async
       console.log(pair[0] + ": " + pair[1]);
     }
 
-    // Enviar la solicitud POST al backend
+    // Obtener el token del almacenamiento local
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("No se encontró un token. Por favor, inicia sesión.");
+      return;
+    }
+
+    // Enviar la solicitud POST al backend con el token en los headers
     const response = await fetch('http://localhost:5000/canchas', {
       method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`, // Incluir el token en los headers
+      },
       body: formData,
     });
 

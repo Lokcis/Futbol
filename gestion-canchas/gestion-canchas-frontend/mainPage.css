@@ -9,7 +9,7 @@
 }
 
 /* Estilo para el mapa */
-#map {
+#madp {
     height: 550px; /* El mapa tiene una altura de 550px */
     width: 95%; /* El mapa ocupa el 95% del ancho de la página */
     top: 14px; /* Se coloca 14px desde el top */
