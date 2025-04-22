@@ -6,6 +6,8 @@ const cors = require('cors');
 const multer = require("multer");
 const path = require("path")
 const pool = require("./db"); // ← importas la conexión
+const nodemailer = require("nodemailer");
+const usuariosPendientes = {};
 
 const PORT = process.env.PORT || 5000;
 
@@ -13,6 +15,15 @@ app.use(cors());
 app.use(express.json()); // Middleware para manejar peticiones con cuerpo JSON
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.urlencoded({ extended: true }));
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "diazmontejodiegoalejandro@gmail.com",
+    pass: "mpcnakbsmmhalwak" 
+  }
+});
+
 // Configurar multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -79,6 +90,10 @@ app.post("/login", async (req, res) => {
 
     const user = result.rows[0];
 
+    if (!user.verificado) {
+      return res.status(401).json({ error: "Debes verificar tu cuenta antes de iniciar sesión" });
+    }    
+
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(400).json({ error: "Correo o contraseña incorrectos" });
@@ -106,37 +121,74 @@ app.post("/usuarios", async (req, res) => {
   }
 
   try {
+    // Verifica si el usuario ya existe y está verificado
     const userExist = await pool.query(
-      "SELECT * FROM usuarios WHERE email = $1",
+      "SELECT * FROM usuarios WHERE email = $1 AND verificado = true",
       [email]
     );
 
     if (userExist.rowCount > 0) {
-      return res
-        .status(400)
-        .json({ error: "El usuario con ese correo ya existe" });
+      return res.status(400).json({ error: "El usuario con ese correo ya existe y está verificado" });
     }
 
-    // Hashear la contraseña
+    // Si ya se había intentado registrar pero no se verificó, reenvía el código
+    const codigoVerificacion = Math.floor(100000 + Math.random() * 900000);
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insertar el nuevo usuario
-    const result = await pool.query(
-      "INSERT INTO usuarios (nombre, email, password, rol) VALUES ($1, $2, $3, $4) RETURNING *",
-      [nombre, email, hashedPassword, rol]
-    );
+    usuariosPendientes[email] = {
+      nombre,
+      email,
+      password: hashedPassword,
+      rol,
+      codigoVerificacion
+    };
 
-    res.status(201).json({
-      mensaje: "Usuario registrado correctamente",
-      usuario: result.rows[0],
+    await transporter.sendMail({
+      from: "diazmontejodiegoalejandro@gmail.com",
+      to: email,
+      subject: "Código de verificación",
+      text: `Tu nuevo código de verificación es: ${codigoVerificacion}`
     });
-    
+
+    res.status(200).json({ message: "Código reenviado. Verifica tu cuenta para activarla." });
 
   } catch (error) {
-    console.error("Error al registrar el usuario:", error);
+    console.error("Error en el registro:", error);
     res.status(500).json({ error: "Error al registrar el usuario" });
   }
 });
+
+
+// Ruta para verificar codigo
+app.post("/verificar", async (req, res) => {
+  const { email, codigo } = req.body;
+
+  try {
+    const datosPendientes = usuariosPendientes[email];
+
+    if (!datosPendientes || datosPendientes.codigoVerificacion !== parseInt(codigo)) {
+      return res.status(400).json({ error: "Código incorrecto o usuario no encontrado" });
+    }
+
+    // Guardar usuario ahora sí en la base de datos
+    await pool.query(
+      `INSERT INTO usuarios (nombre, email, password, rol, verificado, codigo_verificacion)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [datosPendientes.nombre, datosPendientes.email, datosPendientes.password, datosPendientes.rol, true, datosPendientes.codigoVerificacion]
+    );
+
+    // Eliminar de pendientes
+    delete usuariosPendientes[email];
+
+    res.status(200).json({ mensaje: "Cuenta verificada correctamente" });
+  } catch (error) {
+    console.error("Error al verificar el usuario:", error);
+    res.status(500).json({ error: "Error al verificar el usuario" });
+  }
+});
+
+
 
 // Ruta para probar conexión
 app.get("/test-db", async (req, res) => {

@@ -38,6 +38,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para un toque más atractivo */
 }
 
+.modal-overlay:not(.hidden) {
+    display: flex;
+  }  
+
 
 /* Estilo para el botón de cerrar dentro del modal */
 #cancha-inner-btn,#close-cancha-btn,#redirect-login-cancha-btn,#admin-inner-btn,#close-admin-btn,#redirect-login-admin-btn,#close-modal-btn, #login-inner-btn, #register-inner-btn,#close-register-btn,#redirect-login-btn {

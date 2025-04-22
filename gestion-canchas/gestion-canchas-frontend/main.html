@@ -300,6 +300,24 @@
             </div>
         </div>
 
+<!-- Modal de verificación -->
+<div id="verify-modal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <h2>Verificar cuenta</h2>
+    <p>Revisa tu correo y escribe aquí el código de verificación para activar tu cuenta.</p>
+    <form id="verify-form">
+      <input type="email" id="verify-email" placeholder="Correo electrónico" required>
+      <input type="text" id="verify-code" placeholder="Código de verificación" required>
+      
+      <div class="button-container">
+        <button id="verify-btn" type="submit">Verificar</button>
+        <button id="resend-code-btn" type="button">Reenviar código</button>
+        <button type="button" onclick="document.getElementById('verify-modal').classList.add('hidden')">Cerrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
         <!-- API de Google Maps para cargar el mapa en la página -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDCSXtmUI-KR3qJ29oRdemNUpSIb-UDQ&libraries=places"></script>
 
@@ -316,6 +334,8 @@
         <script src="loginConect.js"></script>
 
         <script src="registerUser.js"></script>
+
+        <script src="verify.js"></script>
 
     </body>
 </html>
